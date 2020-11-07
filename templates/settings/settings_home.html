@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% load bootstrap %}
+{% block content %}
+
+
+<div class="card card-header bg-light mb-2">
+  <h4>Settings</h4>
+</div>
+
+<div class="card card-body bg-light mb-2">
+    <a href="{% url 'settings-refresh-players' %}" class="btn btn-sm btn-link">Refresh userlist from login log</a>
+</div>
+
+{% endblock %}

@@ -1,0 +1,33 @@
+{%  extends 'base.html' %}
+{% load static %}
+{% load bootstrap %}
+{% block content %}
+
+<div class="row justify-content-center">
+	<div class="col-sm-6 mt-2">
+		<form method="POST" action="">
+			{% csrf_token %}
+			<div class='card'>
+				<div class="card-header"><strong>Add new donation</strong></div>
+				<div class="card-body">
+					{{form|bootstrap}}
+					<div class="row">
+						<div class="col-md-8">
+							<input type="submit" class="btn btn-primary btn-block" value="Save">
+						</div>
+						<div class="col-md-4">
+							<a href="{% url 'donation-home'%}" class="btn btn-secondary btn-block">Cancel</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
+</div>
+
+
+{% endblock %}
+
+{% block scripts %}
+
+{% endblock %}

@@ -1,0 +1,44 @@
+{% load static %}
+
+<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+  <a class="navbar-brand" href="#">SCUManager</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse"
+    aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarCollapse">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <a class="nav-link" href="{% url 'home'%}">Home <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item active">
+        <a class="nav-link" href="{% url 'players-home' %}">Players</a>
+      </li>
+      <li class="nav-item active">
+        <a class="nav-link" href="{% url 'squad-home'%}">Squads</a>
+      </li>
+      <li class="nav-item active">
+        <a class="nav-link" href="{% url 'donation-home'%}">Donations</a>
+      </li>
+      <li class="nav-item active">
+        <a class="nav-link" href="{% url 'vehicle-home'%}">Vehicles</a>
+      </li>
+      <li class="nav-item active">
+        <a class="nav-link" href="{% url 'case-home'%}">Cases</a>
+      </li>
+      <li class="nav-item active">
+        <a class="nav-link" href="{% url 'settings-home'%}">Settings</a>
+      </li>
+    </ul>
+    <ul class="nav navbar-nav navbar-right mr-2">
+      {% if request.user.is_authenticated %}
+      <li class="mr-2"><a href="{% url 'account-profile'%}" class="btn btn-secondary btn-block">My Profile</a></li>
+      <li class="mr-2"><a href="{% url 'account-logout'%}" class="btn btn-secondary btn-block">Sign Out</a></li>
+      <li class="mr-2"><a href="{% url 'account-register'%}" class="btn btn-secondary btn-block">Register!</a></li>
+      {% else %}
+      <li class="mr-2"><a href="{% url 'account-login'%}" class="btn btn-secondary btn-block">Sign in</a></li>      
+      {% endif %}
+
+    </ul>
+  </div>
+</nav>

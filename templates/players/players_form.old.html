@@ -1,0 +1,52 @@
+{%  extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<div class="row justify-content-center">
+	<div class="col-sm-6 mt-2">
+		<form method="POST" action="">
+			{% csrf_token %}
+			<div class='card'>
+				<div class="card-header"><strong>Add new player</strong></div>
+				<div class="card-body">
+                    <div class="form-group">
+						<div class="label">Ingame Name </div>
+						<div class="">{{form.ingame_name}}</div>
+					</div>
+					<div class="form-group">
+						<div class="label">Discord Name </div>
+						<div class="">{{form.discord_name}}</div>
+					</div>
+					<div class="form-group">
+						<div class="label">Steam ID </div>
+						<div class="">{{form.steam_id}}</div>
+					</div>
+					<div class="form-group">
+						<div class="label">Email </div>
+						<div class="">{{form.email}}</div>
+					</div>
+					<div class="form-group">
+						<div class="label">Note </div>
+						<div class="">{{form.note}}</div>
+					</div>
+					<div class="form-group">
+						<div class="label">Squad</div>
+						<div class="">{{form.squad}}</div>
+					</div>
+					<div class="row">
+						<div class="col-md-8">
+							<input type="submit" class="btn btn-primary btn-block" value="Save">
+						</div>
+						<div class="col-md-4">
+							<a href="{% url 'players-home'%}" class="btn btn-secondary btn-block">Cancel</a>
+						</div>
+					</div>
+					<div class="form-group">
+						<small>{{form.errors}}</small>
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
+</div>
+{% endblock %}

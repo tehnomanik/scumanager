@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+{% load bootstrap %}
+{% block content %}
+
+
+<div class="card card-header bg-light mb-2">
+  <h4>DONATIONS</h4>
+</div>
+
+<div class="row">
+  <div class="col-sm-3">
+    <div class="card card-body bg-light">
+      <div class="form-group">
+        <a href="{% url 'donation-create' %}" class="btn btn-primary text-nowrap btn-block">Add donation</a>
+      </div>
+      <form class="" method="GET">
+        {{myFilter.form|bootstrap}}
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+      </form>
+    </div>
+  </div>
+  <div class="col-sm-9">
+    <div class="card card-body bg-light"> 
+
+      <table class="table table-sm table-bordered">
+        <thead>
+          <tr>          
+            <th scope="col">In-game name</th>
+            <th scope="col">Discord name</th>
+            <th scope="col">Date</th>
+            <th scope="col">Amount</th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for i in item %}
+          <tr>
+            <td>{{i.player.ingame_name}}</td>
+            <td>{{i.player.discord_name}}</td>
+            <td>{{i.donation_date|date:"d.m.Y"}}</td>           
+            <td>{{i.amount}}</td>
+            <td class="text-right">
+              <a href="{% url 'donation-update' i.id %}" class="btn btn-sm btn-secondary">Edit</a>
+              <a href="{% url 'donation-delete' i.id %}" class="btn btn-sm btn-secondary">Delete</a>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+  
+    </div>
+  </div>
+</div>
+
+
+<div class="card mt-2">
+
+
+  </div>
+
+
+{% endblock %}
