@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+{% load bootstrap %}
+{% block content %}
+
+
+<div class="card card-header bg-light mb-2">
+  <h4>FLAGS</h4>
+</div>
+
+<div class="row">
+  <div class="col-sm-3">
+    <div class="card card-body bg-light">
+      <div class="form-group">
+        <a href="{% url 'flag-create' %}" class="btn btn-primary text-nowrap btn-block">Add flag</a>
+      </div>
+      <form class="" method="GET">
+        {{myFilter.form|bootstrap}}
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+      </form>
+    </div>
+  </div>
+  <div class="col-sm-9">
+    <div class="card card-body bg-light">
+      <table class="table table-sm table-bordered">
+        <thead>
+          <tr>
+            <th scope="col">Player</th>
+            <th scope="col">Location</th>
+            <th scope="col">Has Base</th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for flag in item %}
+          <tr>
+            <td>{{flag.player.ingame_name}}</td>
+            <td>{{flag.location}}</td>
+            <td><input disabled type="checkbox" {% if flag.has_base == True %}checked{% endif %}>  </td>
+            <td class="text-right">
+              <a class="btn btn-primary btn-sm" data-toggle="collapse" href="#collapseExample{{flag.id}}"
+                role="button" aria-expanded="false" aria-controls="collapseExample{{flag.id}}">
+                Details
+              </a>
+              <a href="{% url 'flag-update' flag.id %}" class="btn btn-sm btn-secondary">Edit</a>
+              <a href="{% url 'flag-delete' flag.id %}" class="btn btn-sm btn-secondary">Delete</a>
+            </td>
+          </tr>
+          <tr class="collapse" id="collapseExample{{flag.id}}">
+            <td colspan="6">
+              <div class="row">
+                <div class="col-sm-12">
+                  <div class="card card-body">
+                    <div class="form-group">
+                      <strong>Note: </strong>{{flag.note}}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+{% endblock %}

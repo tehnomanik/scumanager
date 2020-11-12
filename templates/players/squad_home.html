@@ -23,8 +23,8 @@
       <table class="table table-sm table-bordered">
         <thead>
           <tr>          
-            <th scope="col">In-game name</th>
-            <th scope="col">Discord name</th>
+            <th scope="col">Squad name</th>
+            <th scope="col">Squad leader</th>
             <th scope="col">Players</th>
             <th scope="col">Vehicles</th>
             <th scope="col">Flags</th>
@@ -34,8 +34,8 @@
         <tbody>
           {% for i in item %}
           <tr>
-            <td>{{i.ingame_name}}</td>
-            <td>{{i.discord_name}}</td>
+            <td>{{i.squad_name}}</td>
+            <td>{{i.squad_leader}}</td>
             <td>{{i.player_set.count}}</td>           
             <td>{{i.totalCars}}</td>
             <td>{{i.totalFlags}}</td>
