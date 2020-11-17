@@ -37,8 +37,8 @@ class squadForm(ModelForm):
         exclude = ['modified_by']
 
         widgets = {
-            'ingame_name': forms.TextInput(attrs={'class': 'form-control', 'autofocus': True, 'required': True}),
-            'discord_name': forms.TextInput(attrs={'class': 'form-control', 'required': False}),
+            'squad_name': forms.TextInput(attrs={'class': 'form-control', 'autofocus': True, 'required': True}),
+            'squad_leader': forms.TextInput(attrs={'class': 'form-control', 'required': False}),
             'note': forms.Textarea(attrs={'class': 'form-control', 'required': False, 'rows': '5'}),
         }
 
@@ -100,8 +100,26 @@ class caseForm(ModelForm):
             'case_date': forms.DateInput(attrs={'placeholder': '31.12.2020 23:59:59'}),
             'case_location': forms.TextInput(attrs={'required': False}),
             'note': forms.Textarea(attrs={'required': False, 'rows': '5'}),
-            'is_active': forms.CheckboxInput(attrs={'disabled': True}),
+            'is_active': forms.CheckboxInput(attrs={'disabled': False}),
             }
+
+    def save(self, user):
+        obj = super().save(commit = False)
+        obj.modified_by = user
+        obj.save() 
+        return obj
+
+class flagForm(ModelForm):
+    class Meta:
+        model = Flag
+        fields = '__all__'
+        exclude = ['modified_by']
+
+        widgets = {
+            'player': forms.Select(attrs={'autofocus': True, 'required': False}),
+            'squad_leader': forms.TextInput(attrs={'required': False}),
+            'note': forms.Textarea(attrs={'required': False, 'rows': '5'}),
+        }
 
     def save(self, user):
         obj = super().save(commit = False)

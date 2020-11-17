@@ -84,7 +84,7 @@ def deletePlayer(request, pk):
 # SQAD HOME PAGE, LISTS ALL SQADS
 @login_required(login_url='account-login')
 def squadHome(request):
-    squads_all = Squad.objects.order_by(Lower('ingame_name')).all()
+    squads_all = Squad.objects.order_by(Lower('squad_name')).all()
     myFilter = SquadFilter(request.GET, queryset = squads_all)
     squads_all = myFilter.qs
     
@@ -101,7 +101,7 @@ def createSquad(request):
         form = squadForm(request.POST)
         if form.is_valid():
             form.save(request.user)
-            name = form.cleaned_data.get('ingame_name')
+            name = form.cleaned_data.get('squad_name')
             messages.success(request, 'New squad created: ' + name)
             return redirect('squad-home')
 
@@ -119,7 +119,7 @@ def updateSquad(request, pk):
         form = squadForm(request.POST, instance=squad)
         if form.is_valid():
             form.save(request.user)
-            name = form.cleaned_data.get('ingame_name')
+            name = form.cleaned_data.get('squad_name')
             messages.success(request, 'Squad info updated: ' + name)
             return redirect('squad-home')
 
@@ -133,7 +133,7 @@ def deleteSquad(request, pk):
     squad = Squad.objects.get(id=pk)
 
     if request.method == "POST":
-        name = squad.ingame_name
+        name = squad.squad_name
         squad.delete()
         messages.success(request, 'Squad deleted: ' + str(name))
         return redirect('squad-home')
@@ -341,4 +341,70 @@ def deleteCase(request, pk):
     return render(request, 'players/case_delete.html', context)
 
 #  CASES END
+####################################################
+
+####################################################
+#  FLAGS START
+
+# FLAGS HOME PAGE, LISTS ALL FLAGS
+@login_required(login_url='account-login')
+def flagHome(request):
+    flags = Flag.objects.order_by('-modified').all()
+
+    myFilter = FlagFilter(request.GET, queryset = flags)
+
+    flags = myFilter.qs
+
+    page_title = " - Flags"
+    context = {'page_title': page_title,'item':flags, 'myFilter':myFilter}
+    return render(request, 'players/flag_home.html', context)
+
+# CREATE NEW FLAG, OPENS FORM flagForm() from forms.py
+@login_required(login_url='account-login')
+def createFlag(request):
+    form = flagForm()
+
+    if request.method == 'POST':
+        form = flagForm(request.POST)
+        if form.is_valid():
+            form.save(request.user)
+            messages.success(request, 'New flag created.')
+            return redirect('flag-home')
+
+    page_title = " - Add new flag"
+    context = {'page_title': page_title,'form': form}
+    return render(request, 'players/flag_form.html', context)
+
+# UPDATE FLAG, OPENS FORM flagForm() from forms.py
+@login_required(login_url='account-login')
+def updateFlag(request, pk):
+    flag = Flag.objects.get(id=pk)
+    form = flagForm(instance=flag)
+
+    if request.method == 'POST':
+        form = flagForm(request.POST, instance=flag)
+        if form.is_valid():
+            form.save(request.user)
+            messages.success(request, 'Flag info updated.')
+            return redirect('flag-home')
+
+    page_title = " - Update flag info"
+    context = {'page_title': page_title,'form': form}
+    return render(request, 'players/flag_form.html', context)
+
+# DELETE FLAG, OPENS html page flag_delete.html
+@login_required(login_url='account-login')
+def deleteFlag(request, pk):
+    flag = Flag.objects.get(id=pk)
+
+    if request.method == "POST":        
+        flag.delete()
+        messages.success(request, 'Flag deleted.')
+        return redirect('flag-home')
+
+    page_title = " - Delete Flag"
+    context = {'page_title': page_title,'item': flag}
+    return render(request, 'players/flag_delete.html', context)
+
+#  FLAGS END
 ####################################################

@@ -17,10 +17,8 @@ def settingsHome(request):
 # SETTINGS HOME PAGE
 @login_required(login_url='account-login')
 def settingsRefreshPlayers(request):
-    item = "NEMA"
     if request.method == "POST":
         log = request.POST.get('log')
-        players = []
         rows_created = 0
         rows_updated = 0
 
@@ -51,10 +49,8 @@ def settingsRefreshPlayers(request):
                             obj.server_id = int(server_id)
                             obj.save()
                             rows_updated += 1
-        item = players
-
         messages.success(request, 'Players created: ' + str(rows_created) + '  Players updated: ' + str(rows_updated) )
 
     page_title = " - Refresh player list"
-    context = {'page_title': page_title, 'item': item}
+    context = {'page_title': page_title}
     return render(request, 'settings/settings_login_refresh.html', context)

@@ -26,4 +26,9 @@ urlpatterns = [
     path('create_case/', views.createCase, name="case-create"),
     path('update_case/<str:pk>', views.updateCase, name="case-update"),
     path('delete_case/<str:pk>', views.deleteCase, name="case-delete"),
+
+    path('flag/', views.flagHome, name="flag-home"),
+    path('create_flag/', views.createFlag, name="flag-create"),
+    path('update_flag/<str:pk>', views.updateFlag, name="flag-update"),
+    path('delete_flag/<str:pk>', views.deleteFlag, name="flag-delete"),
 ]

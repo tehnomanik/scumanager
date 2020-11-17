@@ -15,8 +15,8 @@ class PlayerFilter(django_filters.FilterSet):
 
 class SquadFilter(django_filters.FilterSet):
 
-    ingame_name = CharFilter(field_name='ingame_name', lookup_expr='icontains', label='Game name')
-    discord_name = CharFilter(field_name='discord_name', lookup_expr='icontains', label='Discord name')
+    squad_name = CharFilter(field_name='squad_name', lookup_expr='icontains', label='Squad Name')
+    squad_leader = CharFilter(field_name='squad_leader', lookup_expr='icontains', label='Squad Leader')
     class Meta:
         model = Squad
         fields = '__all__'
@@ -69,3 +69,9 @@ class CaseFilter(django_filters.FilterSet):
         fields = '__all__'
         exclude = ['case_location','note','created','modified' ]
 
+class FlagFilter(django_filters.FilterSet):
+
+    class Meta:
+        model = Flag
+        fields = '__all__'
+        exclude = ['note','created','modified']

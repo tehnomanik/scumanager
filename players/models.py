@@ -5,8 +5,9 @@ from django.contrib.auth.models import User
 
 class Squad(models.Model):
     # PROPERTIES
-    discord_name = models.CharField(max_length=200, null = True, blank=True)
-    ingame_name = models.CharField(max_length=200, null = True)
+    squad_name = models.CharField(max_length=200, null = True, blank=True)
+    squad_leader = models.CharField(max_length=200, null = True, blank=True)
+    #squad_leader = models.ForeignKey(Player, null=True, on_delete=models.SET_NULL, blank=True, related_name="squad_leader")
     note = models.CharField(max_length=1000, null = True, blank=True)
 
     created = models.DateTimeField(auto_now=False, auto_now_add=True)
@@ -15,7 +16,7 @@ class Squad(models.Model):
 
     # METHODS
     def __str__(self):
-        return self.ingame_name
+        return self.squad_name
 
     def totalCars(self):
         players = self.player_set.all()
@@ -67,7 +68,7 @@ class Donation(models.Model):
     # PROPERTIES
     donation_date = models.DateTimeField(null = True, blank=True, auto_now=False, auto_now_add=False)
     amount = models.FloatField(null=True)
-    note = models.CharField(max_length=200, null = True, blank=True)
+    note = models.CharField(max_length=1000, null = True, blank=True)
 
     created = models.DateTimeField(auto_now=False, auto_now_add=True)
     modified = models.DateTimeField(auto_now=True, auto_now_add=False)
@@ -86,11 +87,16 @@ class Flag(models.Model):
     
     # PROPERTIES
     location = models.CharField(max_length=200, null = True)
+    has_base = models.BooleanField(default=True)
+    note = models.CharField(max_length=1000, null = True, blank=True)
 
     created = models.DateTimeField(auto_now=False, auto_now_add=True)
     modified = models.DateTimeField(auto_now=True, auto_now_add=False)
     modified_by = models.ForeignKey(User, null=True, on_delete=models.SET_NULL, blank=True)
     
+    # METHODS
+    def __str__(self):
+        return self.location
 
 class Vehicle(models.Model):
     # ENUMERATION FOR VEHICLE TYPE
@@ -107,7 +113,7 @@ class Vehicle(models.Model):
     # PROPERTIES
     vehicle_id = models.CharField(max_length=200, null = True, blank=True)
     vehicle_type = models.CharField(max_length=200, null = True, choices=VEHICLE_TYPE)
-    note = models.CharField(max_length=200, null = True, blank=True)
+    note = models.CharField(max_length=1000, null = True, blank=True)
 
     created = models.DateTimeField(auto_now=False, auto_now_add=True)
     modified = models.DateTimeField(auto_now=True, auto_now_add=False)
@@ -138,12 +144,13 @@ class Case(models.Model):
     case_type = models.CharField(max_length=200, null = True, choices=CASE_TYPE)
     case_date = models.DateTimeField(null = True, blank=True, auto_now=False, auto_now_add=False)
     case_location = models.CharField(max_length=200, null = True, blank=True)    
-    note = models.CharField(max_length=200, null = True, blank=True)
+    note = models.CharField(max_length=1000, null = True, blank=True)
     is_active = models.BooleanField(default=True)
 
     created = models.DateTimeField(auto_now=False, auto_now_add=True)
     modified = models.DateTimeField(auto_now=True, auto_now_add=False)
-    modified_by = models.ForeignKey(User, null=True, on_delete=models.SET_NULL, blank=True)
+    modified_by = models.ForeignKey(User, null=True, on_delete=models.SET_NULL, blank=True, related_name='modified_by')
+
 
     # METHODS
     def __str__(self):
